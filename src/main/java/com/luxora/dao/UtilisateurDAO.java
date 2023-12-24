@@ -13,13 +13,11 @@ public class UtilisateurDAO {
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, utilisateur.getNom_uti());
-                preparedStatement.setString(2, utilisateur.getPrenom_uti());
-                preparedStatement.setString(3, utilisateur.getLogin());
+                preparedStatement.setString(2, utilisateur.getPrenom_uti());;
                 preparedStatement.setString(4, utilisateur.getMdp());
                 preparedStatement.setString(5, utilisateur.getEmail());
-                preparedStatement.setString(6, utilisateur.getAddress());
                 preparedStatement.setString(7, utilisateur.getUsername());
-                preparedStatement.setString(8, utilisateur.getEtat());
+
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected > 0) {

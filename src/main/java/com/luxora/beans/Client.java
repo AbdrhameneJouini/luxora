@@ -7,14 +7,23 @@ import java.sql.SQLException;
 
 
 public class Client extends Utilisateur{
-    String address;
-    String num_Tel;
+
+    private String address;
+    private String num_Tel;
+
+    private String etatCompte;
 
     public Client() {
 
     }
 
+    public String getEtatCompte() {
+        return etatCompte;
+    }
 
+    public void setEtatCompte(String etatCompte) {
+        this.etatCompte = etatCompte;
+    }
 
     public String getAddress() {
         return address;
