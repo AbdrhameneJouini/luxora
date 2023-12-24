@@ -62,10 +62,7 @@ import java.sql.*;
          this.prenom_uti = prenom_uti;
      }
 
-<<<<<<< HEAD
-    
-=======
->>>>>>> branch 'master' of https://github.com/AbdrhameneJouini/luxora.git
+
 
      public String getMdp() {
          return mdp;

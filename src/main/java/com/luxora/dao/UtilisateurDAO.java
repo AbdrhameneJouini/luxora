@@ -15,11 +15,11 @@ public class UtilisateurDAO {
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, utilisateur.getNom_uti());
-<<<<<<< HEAD
+
                 preparedStatement.setString(2, utilisateur.getPrenom_uti());
-=======
-                preparedStatement.setString(2, utilisateur.getPrenom_uti());;
->>>>>>> branch 'master' of https://github.com/AbdrhameneJouini/luxora.git
+
+               
+
                 preparedStatement.setString(4, utilisateur.getMdp());
                 preparedStatement.setString(5, utilisateur.getEmail());
                 preparedStatement.setString(7, utilisateur.getUsername());
