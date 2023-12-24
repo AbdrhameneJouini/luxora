@@ -1,20 +1,33 @@
 package com.luxora.beans;
+import java.util.List;
+
+import com.luxora.dao.NoteDAO;
+
+import com.luxora.beans.Note;
 public class Article {
-    private int Reference;
+    private String Reference;
     private int Prix;
     private String Nom_Article;
     private String Description;
     private String Image;
     private int Quantite;
     private String Taille ;
+    private double moynote;
   
    
 
-    public int getReference() {
+    public String getReference() {
         return Reference;
     }
+    public double getMoyenneNote() {
+        return moynote;
+    }
 
-    public void setReference(int reference) {
+    public void setMoyenneNote(double moyenneNote) {
+      moynote = moyenneNote;
+    }
+
+    public void setReference(String reference) {
         Reference = reference;
     }
 
@@ -73,7 +86,7 @@ public class Article {
     }
 
    
-    public Article(int reference, int prix, String nom_Article, String description, String image, int quantite, String taille) {
+    public Article(String reference, int prix, String nom_Article, String description, String image, int quantite, String taille) {
     	super() ;
         this.Reference = reference;
         this.Prix = prix;
@@ -85,12 +98,30 @@ public class Article {
     }
    public Article() {
 	   super() ;
-        this.Reference = 0;
+        this.Reference = "";
         this.Prix = 0;
         this.Nom_Article = "";
         this.Description = "";
         this.Image = "";
         this.Quantite = 0;
         this.Taille = "";
-    }
-}
+    }  
+ double calculNoteMoyenne(String ref) {
+     NoteDAO noteDAO = new NoteDAO();
+ 
+        List<Note> notesArticle = noteDAO.getNotesByArticleReference(ref);
+
+        if (notesArticle.isEmpty()) {   this.moynote= 0;
+            return 0; 
+        }
+
+        double sommeNotes = 0;
+        for (Note note : notesArticle) {
+            sommeNotes += note.getNote();
+        }
+        this.moynote= sommeNotes;
+
+        return sommeNotes / notesArticle.size();
+    } }
+  
+

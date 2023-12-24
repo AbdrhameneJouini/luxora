@@ -31,7 +31,7 @@ public class ArticleDAO {
                     // If needed, you can retrieve the generated ID
                     ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
                     if (generatedKeys.next()) {
-                        int generatedId = generatedKeys.getInt(1);
+                        String generatedId = generatedKeys.getString(1);
                         article.setReference(generatedId);
                     }
                 } else {
@@ -49,7 +49,7 @@ public class ArticleDAO {
             String query = "UPDATE articles SET Prix=?, Nom_Article=?, Description=?, Image=?, Quantite=?, Taille=? WHERE Reference=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 prepareStatements(article, preparedStatement);
-                preparedStatement.setInt(7, article.getReference());
+                preparedStatement.setString(7, article.getReference());
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected > 0) {
@@ -81,11 +81,11 @@ public class ArticleDAO {
         }
     }
 
-    public Article getArticleById(int reference) {
+    public Article getArticleById( String reference) {
         try (Connection connection = DBConnection.getConnection()) {
             String query = "SELECT * FROM articles WHERE Reference=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setInt(1, reference);
+                preparedStatement.setString(1, reference);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
@@ -120,7 +120,7 @@ public class ArticleDAO {
 
     private Article mapResultSetToArticle(ResultSet resultSet) throws SQLException {
         Article article = new Article();
-        article.setReference(resultSet.getInt("Reference"));
+        article.setReference(resultSet.getString("Reference"));
         article.setPrix(resultSet.getInt("Prix"));
         article.setNom_Article(resultSet.getString("Nom_Article"));
         article.setDescription(resultSet.getString("Description"));
@@ -134,7 +134,7 @@ public class ArticleDAO {
 
     public static void main(String[] args) {
         ArticleDAO infoProduit = new ArticleDAO();
-        int articleId = 1; // Remplacez par l'ID de l'article que vous souhaitez récupérer
+        String articleId = "1"; // Remplacez par l'ID de l'article que vous souhaitez récupérer
 
         Article article = infoProduit.getArticleById(articleId);
 
