@@ -88,7 +88,7 @@ public class Token {
 
 
     public boolean checkTokenInDatabase() {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/ecommerce", "root", "root")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/ecommerce", "root", "gestion_scolaire123")) {
             String query = "SELECT purpose, email FROM tokens WHERE token = ? AND expiration_datetime > NOW()";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, token);

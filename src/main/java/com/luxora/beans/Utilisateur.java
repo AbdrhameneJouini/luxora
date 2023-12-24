@@ -8,7 +8,6 @@ import java.sql.*;
      private int id_uti;
      private String nom_uti;
      private String prenom_uti;
-     private String login;
      private String mdp;
      private String email;
      private String address;
@@ -78,13 +77,7 @@ import java.sql.*;
          this.prenom_uti = prenom_uti;
      }
 
-     public String getLogin() {
-         return login;
-     }
-
-     public void setLogin(String login) {
-         this.login = login;
-     }
+    
 
      public String getMdp() {
          return mdp;
