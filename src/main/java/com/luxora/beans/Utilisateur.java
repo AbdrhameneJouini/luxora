@@ -10,10 +10,10 @@ import java.sql.*;
      private String prenom_uti;
      private String mdp;
      private String email;
-     private String address;
+
      private String username;
 
-     private String etat;
+
 
 
      public Utilisateur() {
@@ -28,21 +28,6 @@ import java.sql.*;
          this.email = email;
      }
 
-     public String getAddress() {
-         return address;
-     }
-
-     public void setAddress(String address) {
-         this.address = address;
-     }
-
-     public String getEtat() {
-         return etat;
-     }
-
-     public void setEtat(String etat) {
-         this.etat = etat;
-     }
 
      public String getUsername() {
          return username;
@@ -77,7 +62,10 @@ import java.sql.*;
          this.prenom_uti = prenom_uti;
      }
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> branch 'master' of https://github.com/AbdrhameneJouini/luxora.git
 
      public String getMdp() {
          return mdp;

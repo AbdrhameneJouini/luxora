@@ -10,14 +10,23 @@ import com.luxora.dao.DBConnection;
 
 
 public class Client extends Utilisateur{
-    String address;
-    String num_Tel;
+
+    private String address;
+    private String num_Tel;
+
+    private String etatCompte;
 
     public Client() {
 
     }
 
+    public String getEtatCompte() {
+        return etatCompte;
+    }
 
+    public void setEtatCompte(String etatCompte) {
+        this.etatCompte = etatCompte;
+    }
 
     public String getAddress() {
         return address;
@@ -60,7 +69,7 @@ public class Client extends Utilisateur{
         clt.setPrenom_uti(resultSet.getString("prenom_uti"));
         clt.setEmail(resultSet.getString("email"));
         clt.setUsername(resultSet.getString("username"));
-        clt.setEtat(resultSet.getString("etat"));  
+        clt. setEtatCompte(resultSet.getString("etatCompte"));  
         clt.setAddress(resultSet.getString("address"));
         return clt;
     }
