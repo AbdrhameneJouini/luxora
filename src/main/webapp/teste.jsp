@@ -5,10 +5,10 @@
     <title>Formulaire de test</title>
 </head>
 <body>
-    <h1>Formulaire de test pour l'ID de  </h1>
-    <form action="Commentaire" method="GET">
-        <label for="articleId">ID de uti:</label>
-        <input type="text" id="articleId" name="articleId">
+    <h1>Formulaire de test pour le profil du client</h1>
+    <form action="Profile" method="GET">
+        <label for="Idclt">ID de client :</label>
+        <input type="text" id="Idclt" name="Idclt">
         <button type="submit">Envoyer</button>
     </form>
 </body>
