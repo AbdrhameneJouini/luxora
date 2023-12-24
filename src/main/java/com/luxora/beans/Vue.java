@@ -1,5 +1,5 @@
 package com.luxora.beans;
-
+import com.luxora.dao.VueDAO;
 import java.sql.Date;
 
 public class Vue {
@@ -38,4 +38,8 @@ public class Vue {
  
     public void setDate(Date date) {
         this.date = date;
-    } }
+    } 
+    public void incrementerNombreDeVues(String reference) {  VueDAO vueDAO = new VueDAO() ;
+    int nombreDeVuesActuel = vueDAO.calculerNombreVuesParReference(reference);
+    int nouveauNombreDeVues = nombreDeVuesActuel + 1;
+        } }

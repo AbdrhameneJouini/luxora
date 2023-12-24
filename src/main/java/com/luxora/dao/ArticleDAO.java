@@ -3,7 +3,8 @@ package com.luxora.dao;
 
 import com.luxora.beans.Article;
 import com.luxora.dao.DBConnection;
-
+import com.luxora.dao.VueDAO;
+import com.luxora.beans.Vue;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +90,9 @@ public class ArticleDAO {
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
+                    	int nbVues = resultSet.getInt("nbvues");
+                    	 nbVues++;
+                   
                         return mapResultSetToArticle(resultSet);
                     } else {
                         System.out.println("Article not found.");

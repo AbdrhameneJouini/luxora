@@ -13,8 +13,14 @@ public class Article {
     private int Quantite;
     private String Taille ;
     private double moynote;
+    private int nbvues;
   
-   
+    public int getnbvues() {
+        return nbvues;
+    }
+    public void setnbvues(int nbvues) {
+        this.nbvues = nbvues;
+      }
 
     public String getReference() {
         return Reference;
@@ -86,7 +92,7 @@ public class Article {
     }
 
    
-    public Article(String reference, int prix, String nom_Article, String description, String image, int quantite, String taille) {
+    public Article(String reference, int prix, String nom_Article, String description, String image, int quantite, String taille, int nbvues) {
     	super() ;
         this.Reference = reference;
         this.Prix = prix;
@@ -95,6 +101,7 @@ public class Article {
         this.Image = image;
         this.Quantite = quantite;
         this.Taille = taille;
+        this.nbvues= nbvues;
     }
    public Article() {
 	   super() ;
