@@ -41,6 +41,11 @@ public class Client extends Utilisateur{
         this.num_Tel = num_Tel;
     }
 
+
+    public void TEST(){
+//        #this is a test function to test github ; it will be deleted later on
+
+    }
     public static void main(String args[]){
 
         Connection con;
