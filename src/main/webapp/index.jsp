@@ -10,8 +10,10 @@
 </h1>
 <br/>
 
-
-
+<br/><br/><br/>
+<a href="commentsTEST.jsp">get comments</a>
+<br/><br/><br/>
+<a href="admin/index.jsp">go to admin interface</a>
 <br/><br/><br/>
 <a href="login.jsp">go to login page</a>
 <br/><br/><br/>

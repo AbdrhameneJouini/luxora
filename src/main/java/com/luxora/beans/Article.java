@@ -3,15 +3,16 @@ import java.util.List;
 
 import com.luxora.dao.NoteDAO;
 
-import com.luxora.beans.Note;
 public class Article {
     private String Reference;
-    private int Prix;
+    private double Prix;
     private String Nom_Article;
     private String Description;
     private String Image;
-    private int Quantite;
-    private String Taille ;
+
+    private String Categorie;
+    private List <DetailArticle> listDetailArticle;
+    private List <Commentaire> listCommentaires;
     private double moynote;
     private int nbvues;
   
@@ -38,11 +39,11 @@ public class Article {
     }
 
     
-    public int getPrix() {
+    public double getPrix() {
         return Prix;
     }
 
-    public void setPrix(int prix) {
+    public void setPrix(double prix) {
         Prix = prix;
     }
 
@@ -55,6 +56,35 @@ public class Article {
         Nom_Article = nom_Article;
     }
 
+    public String getCategorie() {
+        return Categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        Categorie = categorie;
+    }
+
+    public void setListDetailArticle(List<DetailArticle> listDetailArticle) {
+        this.listDetailArticle = listDetailArticle;
+    }
+
+
+
+    public double getMoynote() {
+        return moynote;
+    }
+
+    public void setMoynote(double moynote) {
+        this.moynote = moynote;
+    }
+
+    public int getNbvues() {
+        return nbvues;
+    }
+
+    public void setNbvues(int nbvues) {
+        this.nbvues = nbvues;
+    }
 
     public String getDescription() {
         return Description;
@@ -73,35 +103,24 @@ public class Article {
         Image = image;
     }
 
-    
-    public int getQuantite() {
-        return Quantite;
+
+    public Article(String reference, String nom_Article,Double prix,  String categorie,String description) {
+        Reference = reference;
+        Prix = prix;
+        Nom_Article = nom_Article;
+        Description = description;
+        Categorie = categorie;
     }
 
-    public void setQuantite(int quantite) {
-        Quantite = quantite;
-    }
-
-   
-    public String getTaille() {
-        return Taille;
-    }
-
-    public void setTaille(String taille) {
-        Taille = taille;
-    }
-
-   
-    public Article(String reference, int prix, String nom_Article, String description, String image, int quantite, String taille, int nbvues) {
+    public Article(String reference, Double prix, String nom_Article, String description, String image, int nbvues, String Categorie) {
     	super() ;
         this.Reference = reference;
         this.Prix = prix;
         this.Nom_Article = nom_Article;
         this.Description = description;
         this.Image = image;
-        this.Quantite = quantite;
-        this.Taille = taille;
         this.nbvues= nbvues;
+        this.Categorie= Categorie;
     }
    public Article() {
 	   super() ;
@@ -110,8 +129,7 @@ public class Article {
         this.Nom_Article = "";
         this.Description = "";
         this.Image = "";
-        this.Quantite = 0;
-        this.Taille = "";
+
     }  
  double calculNoteMoyenne(String ref) {
      NoteDAO noteDAO = new NoteDAO();

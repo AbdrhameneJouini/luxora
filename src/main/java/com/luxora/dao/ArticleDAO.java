@@ -13,28 +13,26 @@ public class ArticleDAO {
 
 
     private void prepareStatements(Article article, PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setInt(1, article.getPrix());
-        preparedStatement.setString(2, article.getNom_Article());
-        preparedStatement.setString(3, article.getDescription());
-        preparedStatement.setString(4, article.getImage());
-        preparedStatement.setInt(5, article.getQuantite());
-        preparedStatement.setString(6, article.getTaille());
+
+        preparedStatement.setString(1, article.getReference());
+        preparedStatement.setDouble(2, article.getPrix());
+        preparedStatement.setString(3, article.getNom_Article());
+        preparedStatement.setString(4, article.getCategorie());
+        preparedStatement.setString(5, article.getDescription());
+        preparedStatement.setString(6, article.getImage());
+
     }
     public void insertArticle(Article article) {
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "INSERT INTO articles (Prix, Nom_Article, Description, Image, Quantite, Taille) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO articles (reference ,Prix, Nom_Article, category ,Description, Image) VALUES (? ,?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 prepareStatements(article, preparedStatement);
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected > 0) {
                     System.out.println("Article inserted successfully.");
-                    // If needed, you can retrieve the generated ID
-                    ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                    if (generatedKeys.next()) {
-                        String generatedId = generatedKeys.getString(1);
-                        article.setReference(generatedId);
-                    }
+
+
                 } else {
                     System.out.println("Article insertion failed.");
                 }
@@ -47,9 +45,10 @@ public class ArticleDAO {
 
     public void updateArticle(Article article) {
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "UPDATE articles SET Prix=?, Nom_Article=?, Description=?, Image=?, Quantite=?, Taille=? WHERE Reference=?";
+            String query = "UPDATE articles SET Prix=?, Nom_Article=?, Description=?, Image=? WHERE Reference=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 prepareStatements(article, preparedStatement);
+                // NEEDS AN UPDATE
                 preparedStatement.setString(7, article.getReference());
 
                 int rowsAffected = preparedStatement.executeUpdate();
@@ -129,8 +128,7 @@ public class ArticleDAO {
         article.setNom_Article(resultSet.getString("Nom_Article"));
         article.setDescription(resultSet.getString("Description"));
         article.setImage(resultSet.getString("Image"));
-        article.setQuantite(resultSet.getInt("Quantite"));
-        article.setTaille(resultSet.getString("Taille"));
+
         return article;
     }
 

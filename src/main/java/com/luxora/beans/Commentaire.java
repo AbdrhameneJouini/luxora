@@ -6,29 +6,46 @@ public class Commentaire {
     private int id_commentaire;
     private String date;
     private String texte;
-    private int id_uti ;
-    private String reference ;
-    private int ref_comm ;
+    private int id_uti;
+    private String reference;
+    private int ref_comm;
     List<Commentaire> sous_com;
 
     public Commentaire() {
-        
+
     }
-    public Commentaire(int id_commentaire, String date, String texte,int id_uti,String reference,int ref_comm) {
+
+    public Commentaire(int id, String text) {
+        this.id_commentaire = id;
+        this.texte = text;
+        this.sous_com = new ArrayList<>();
+    }
+
+    public Commentaire(int id_commentaire, String date, String texte, int id_uti, String reference, int ref_comm) {
         this.id_commentaire = id_commentaire;
         this.date = date;
         this.texte = texte;
-        this.id_uti= id_uti;
+        this.id_uti = id_uti;
         this.reference = reference;
-        this.ref_comm=ref_comm;
+        this.ref_comm = ref_comm;
     }
-public List<Commentaire> getsous_comm () 
-{return sous_com;}
-public void setsous_comm(List<Commentaire> sous_comm) {this.sous_com=sous_comm;}
+
+    public List<Commentaire> getsous_comm() {
+        return sous_com;
+    }
+
+    public void setsous_comm(List<Commentaire> sous_comm) {
+        this.sous_com = sous_comm;
+    }
+
     public int getref_comm() {
         return ref_comm;
     }
-    public void setref_comm(int ref_comm) {this.ref_comm=ref_comm;}
+
+    public void setref_comm(int ref_comm) {
+        this.ref_comm = ref_comm;
+    }
+
     public int getId_commentaire() {
         return id_commentaire;
     }
@@ -52,17 +69,26 @@ public void setsous_comm(List<Commentaire> sous_comm) {this.sous_com=sous_comm;}
     public void setTexte(String texte) {
         this.texte = texte;
     }
+
     public int getId_uti() {
         return id_uti;
     }
+
     public void setId_uti(int id_uti) {
         this.id_uti = id_uti;
     }
+
     public String getreference() {
         return reference;
     }
+
     public void setreference(String ref) {
         this.reference = ref;
+    }
+
+
+    public void addReply(Commentaire reply) {
+        this.sous_com.add(reply);
     }
 
     public static List<Commentaire> getCommentairesPrincipaux(List<Commentaire> commentaires) {
@@ -74,6 +100,8 @@ public void setsous_comm(List<Commentaire> sous_comm) {this.sous_com=sous_comm;}
         }
         return commentairesPrincipaux;
     }
+
+
     public static List<Commentaire> getSousCommentaires(List<Commentaire> commentaires, Commentaire commentairePrincipal) {
         List<Commentaire> sousCommentaires = new ArrayList<>();
         int idCommentairePrincipal = commentairePrincipal.getId_commentaire();
