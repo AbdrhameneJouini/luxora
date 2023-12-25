@@ -27,7 +27,7 @@ public class Login extends HttpServlet {
 
 
         String loginResult = utilisateurDAO.login(email, mdp);
-
+int role=utilisateurDAO.checkUserRole(email) ;
         System.out.printf("login result is " + loginResult);
 
         String message;
@@ -53,6 +53,10 @@ public class Login extends HttpServlet {
             case "Suspended":
                 message = "Account suspended. Please contact support.";
                 destination = "/accountSuspended.jsp";
+                break;
+            case "":
+                message = "";
+                destination = "/admin/index.jsp";
                 break;
             default:
                 message = "Unknown error. Please try again.";
