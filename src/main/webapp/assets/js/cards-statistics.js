@@ -332,13 +332,13 @@
           data: [0, 25, 10, 40, 25, 55]
         }
       ],
-      tooltip: {
+      /*tooltip: {
         shared: false,
         intersect: true,
         x: {
           show: false
         }
-      },
+      },*/
       xaxis: {
         labels: {
           show: false
