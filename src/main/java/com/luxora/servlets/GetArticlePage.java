@@ -9,7 +9,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 
 @WebServlet(name = "GetArticleDetails", value = "/GetArticleDetails")
-public class GetArticleDetails extends HttpServlet {
+public class GetArticlePage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String articleId = request.getParameter("articleId"); // Get the article ID from the form
