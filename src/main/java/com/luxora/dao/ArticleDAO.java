@@ -128,6 +128,8 @@ public class ArticleDAO {
         article.setNom_Article(resultSet.getString("Nom_Article"));
         article.setDescription(resultSet.getString("Description"));
         article.setImage(resultSet.getString("Image"));
+        article.setCategorie(resultSet.getString("category"));
+
 
         return article;
     }

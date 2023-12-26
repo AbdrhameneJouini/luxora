@@ -53,8 +53,9 @@ public class AddProduct extends HttpServlet {
                 detailArticleDAO.insertDetailArticle(detailArticle);
             }
         }
+        this.getServletContext().getRequestDispatcher("/admin/GetAllProducts").forward(request, response);
 
-        // Now you have sizesArray and quantitiesArray containing the non-null sizes and quantities
+
     }
 
     @Override

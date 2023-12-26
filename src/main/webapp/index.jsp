@@ -1,4 +1,9 @@
+<%@ page import="java.io.IOException" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.io.*, java.util.*, javax.servlet.*"%>
+<%@ page import="javax.servlet.http.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +15,40 @@
 </h1>
 <br/>
 
+
+
+<%--<%
+    String data = (String) request.getParameter("servletData");
+    System.out.println("servletData is " + data);
+    if (data == null) {
+        System.out.println("we're trying ");
+        try {
+            application.getRequestDispatcher("/GetAllProducts").forward(request, response);
+
+            // Retrieve data from the servlet after forwarding
+            Object servletData = request.getAttribute("servletData");
+
+            // Check if data is not null before using it
+            if (servletData != null) {
+                out.println("Data received from servlet: " + servletData.toString());
+            } else {
+                out.println("Error: No data received from the servlet.");
+            }
+
+        } catch (ServletException | IOException e) {
+            // Proper error handling can be added here
+            e.printStackTrace();
+        }
+    } else {
+        // Handle the case when data is not provided
+        // This ensures separation of concerns and a cleaner, more maintainable code
+        out.println("Error: Data not provided.");
+    }
+%>--%>
+
+
+<br/><br/><br/>
+<a href="test_produits.jsp">test produits</a>
 <br/><br/><br/>
 <a href="commentsTEST.jsp">get comments</a>
 <br/><br/><br/>

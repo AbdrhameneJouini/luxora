@@ -30,7 +30,7 @@
 
             <!--/ Products -->
             <li class="menu-item">
-                <a href="index.jsp?component=products" class="menu-link  ">
+                <a href="GetAllProducts" class="menu-link  ">
                     <i class="ti ti-hanger"></i>
                     <div>Products</div>
                 </a>

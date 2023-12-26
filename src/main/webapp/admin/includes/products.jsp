@@ -6,7 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ page import="com.luxora.beans.Article" %>
+<%@ page import="java.util.List" %>
+<%@taglib  uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
 <%--
   Created by IntelliJ IDEA.
   Product: abdou
@@ -14,8 +16,8 @@
   Time: 2:48 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<jsp:include page="editProductModal.jsp" />
+<jsp:include page="deleteProductModal.jsp" />
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row g-4 mb-4">
         <div class="col-sm-6 col-xl-3">
@@ -120,28 +122,65 @@
                     </div>
                 </div>
             </div>
-                <table class="datatables-Products table border-top dataTable no-footer dtr-column" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
-                <thead>
-                <tr>
-                    <th class="control sorting_disabled dtr-hidden" rowspan="1" colspan="1" style="width: 61.4844px; display: none;" aria-label=""></th>
-                    <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 148.531px;" aria-sort="descending" aria-label="Reference: activate to sort column ascending">Reference</th>
-                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 146px;" aria-label="Name: activate to sort column ascending">Name</th>
-                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 148.922px;" aria-label="Price: activate to sort column ascending">Price</th>
-                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 192.109px;" aria-label="Category: activate to sort column ascending">Category</th>
+                    <table class="datatables-Products table border-top dataTable no-footer dtr-column" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+                    <thead>
+                    <tr>
+                        <th class="control sorting_disabled dtr-hidden" rowspan="1" colspan="1" style="width: 61.4844px; display: none;" aria-label=""></th>
+                        <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 148.531px;" aria-sort="descending" aria-label="Reference: activate to sort column ascending">Reference</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 146px;" aria-label="Name: activate to sort column ascending">Name</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 148.922px;" aria-label="Price: activate to sort column ascending">Price</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 192.109px;" aria-label="Category: activate to sort column ascending">Category</th>
 
-                    <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 194.891px;" aria-label="Actions">Actions</th>
-                </tr>
-                </thead>
-
-
-
-                    <tbody>
-                    <tr class="odd">
-                        <td valign="top" colspan="6" class="dataTables_empty">
-                        Loading... {fetch from db}
-                        </td>
+                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 194.891px;" aria-label="Actions">Actions</th>
                     </tr>
-                    </tbody>
+                    </thead>
+
+
+
+                        <tbody>
+                        <% List<Article> articleList = (List<Article>) request.getAttribute("articleList");
+
+                            if (articleList != null && !articleList.isEmpty()) {
+                                for (Article article : articleList) {
+                        %>
+                        <tr>
+                            <td><%= article.getReference() %></td>
+                            <td><%= article.getNom_Article() %></td>
+                            <td><%= article.getPrix() %></td>
+                            <td><%= article.getCategorie() %></td>
+                            <td>
+
+<%--                                edit button --%>
+                                <button
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalCenter"
+                                        style="background-color: transparent; color: white; border: none; padding: 5px 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; margin: 2px; cursor: pointer;">
+
+
+                                    <i class="ti ti-edit" style=" color: rgba(0,111,255,0.85) " ></i>
+                                </button>
+<%--                                    delete button--%>
+
+    <button type="button" class="btn btn-primary" id="confirm-text">Alert</button>
+                                <button
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#animationModal"
+                                        style="background-color: transparent; color: white; border: none; padding: 5px 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; margin: 2px; cursor: pointer;">
+                                    <i class="ti ti-trash"  style="color: #a10303;"></i>
+                                </button>
+
+                            </td>
+
+                        </tr>
+                        <% }
+                        } else { %>
+                        <tr class="odd">
+                            <td valign="top" colspan="6" class="dataTables_empty">
+                                Loading... <!-- You may want to add a loading spinner or message here -->
+                            </td>
+                        </tr>
+                        <% } %>
+                        </tbody>
 
 
 
@@ -260,10 +299,17 @@
 
 
                 </form>
+
             </div>
         </div>
     </div>
+
+
+
+
+
 </div>
+
 
 <script>
 
