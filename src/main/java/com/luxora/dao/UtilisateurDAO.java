@@ -5,6 +5,8 @@ import com.luxora.beans.Client;
 import com.luxora.beans.Utilisateur;
 import org.mindrot.jbcrypt.BCrypt;
 
+
+
 import java.sql.*;
 
 public class UtilisateurDAO {
@@ -38,7 +40,7 @@ public class UtilisateurDAO {
     }
     public boolean checkEmailExists(String email) {
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/ecommerce","root","root")) {
+    	 try (Connection connection = DBConnection.getConnection()) {
             String query = "SELECT 1 FROM utilisateur WHERE email = ? ";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, email);
@@ -129,33 +131,97 @@ public class UtilisateurDAO {
             }
         }
     }
-    public String login(String email, String enteredPassword) {
-        System.out.println("\n in login : email " + email + " mdp : " + enteredPassword + " \n");
+    public  int checkUserRole(String email) {
+        try (Connection connection = DBConnection.getConnection()) {
+            String query = "SELECT id_uti FROM utilisateur WHERE email = ?";
+            
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, email); 
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/ecommerce", "root", "root")) {
-            String query = "SELECT u.id_uti, c.etat, u.mdp FROM utilisateur u JOIN client c ON u.id_uti = c.id_uti WHERE u.email = ?";
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) { 
+                        int userId = resultSet.getInt("id_uti");
+                        String adminQuery = "SELECT id_uti FROM admin WHERE id_uti = ?";
+                        try (PreparedStatement adminStatement = connection.prepareStatement(adminQuery)) {
+                            adminStatement.setInt(1, userId);
+
+                            try (ResultSet adminResult = adminStatement.executeQuery()) {
+                                if (adminResult.next()) {
+                                    return 0; // admin
+                                } else {
+                                    String clientQuery = "SELECT id_uti FROM client WHERE id_uti = ?";
+                                    try (PreparedStatement clientStatement = connection.prepareStatement(clientQuery)) {
+                                        clientStatement.setInt(1, userId);
+
+                                        try (ResultSet clientResult = clientStatement.executeQuery()) {
+                                            if (clientResult.next()) {
+                                                return 1; //  client
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+          
+        } catch (SQLException e) {
+            e.printStackTrace();
+            
+        }
+        return -3 ;}
+    
+    public String getEtatClient(String email) {
+        String etat = null;
+
+        try (Connection connection = DBConnection.getConnection()) {
+            
+            String query = "SELECT c.etat FROM utilisateur u JOIN client c ON u.id_uti = c.id_uti WHERE u.email = ?";
+            
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, email);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
-                        // Retrieve hashed password and etat from the database
+                        etat = resultSet.getString("etat");
+                        
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+         
+        }
+
+        return etat;
+    }
+    public String login(String email, String enteredPassword) {
+        String etat = "";
+        System.out.println("\n in login : email " + email + " mdp : " + enteredPassword + " \n");
+
+        try (Connection connection = DBConnection.getConnection()) {
+            String query = "SELECT id_uti, mdp FROM utilisateur WHERE email = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, email);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
                         String hashedPassword = resultSet.getString("mdp");
                         int userId = resultSet.getInt("id_uti");
-                        String etat = resultSet.getString("etat");
+                        if (checkUserRole(email) == 1) {
+                            etat = getEtatClient(email);
+                        }
 
-                        // Check if the entered password matches the hashed password
                         if (BCrypt.checkpw(enteredPassword, hashedPassword)) {
-                            // If the passwords match, login is successful
                             System.out.printf("Login successful. User ID: %d, Etat: %s\n", userId, etat);
                             return etat;
                         } else {
-                            // If passwords don't match, login fails
+                        	  // If passwords don't match, login fails
                             System.out.println("Invalid login credentials");
                             return "Invalid login credentials";
                         }
                     } else {
-                        // No user found with the given email
                         System.out.println("User not found");
                         return "User not found";
                     }
@@ -163,12 +229,11 @@ public class UtilisateurDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception appropriately in a real-world scenario
-            return "Fatal Error";
+            // Gérer l'exception dans un scénario réel
         }
+
+        return "Fatal Error";
     }
-
-
     public boolean activateAccount(String email) {
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/ecommerce", "root", "root")) {
             String updateQuery = "UPDATE client SET etat = 'ACTIVATED' WHERE id_uti IN (SELECT id_uti FROM utilisateur WHERE email = ?)";
@@ -215,8 +280,12 @@ public class UtilisateurDAO {
             return false;
         }
     }
-
-
    
+        public static void main(String[] args) {
+            // Le mot de passe à hacher (simulé pour le test)
+            String password = "mimi";
 
-}
+            // Hash du mot de passe
+            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+            System.out.println("Mot de passe haché : " + hashedPassword);
+   }} 

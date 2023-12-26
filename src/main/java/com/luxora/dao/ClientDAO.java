@@ -30,17 +30,17 @@ public class ClientDAO {
     
 
 
-    public Client getClientById( int Id_uti) {
+    public Client getClientById( int id_uti) {
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "SELECT * FROM client WHERE Id_uti=?";
+            String query = "SELECT * FROM client WHERE id_uti=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setInt(1, Id_uti);
+                preparedStatement.setInt(1, id_uti);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
                         return mapResultSetToClient(resultSet);
                     } else {
-                        System.out.println("Article not found.");
+                        System.out.println("client not found.");
                         return null;
                     }
                 }
@@ -55,9 +55,9 @@ public class ClientDAO {
 
     private Client mapResultSetToClient(ResultSet resultSet) throws SQLException {
         Client clt = new Client();
-        clt.setId_uti(resultSet.getInt("Id_uti"));
-        clt.setNom_uti(resultSet.getString("Nom_uti"));
-        clt.setPrenom_uti(resultSet.getString("Prenom_uti"));
+        clt.setId_uti(resultSet.getInt("id_uti"));
+        clt.setNom_uti(resultSet.getString("nom_uti"));
+        clt.setPrenom_uti(resultSet.getString("prenom_uti"));
         clt.setEmail(resultSet.getString("email"));
        
         clt.setUsername(resultSet.getString("username"));
