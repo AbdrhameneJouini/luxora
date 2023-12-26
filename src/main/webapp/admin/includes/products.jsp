@@ -160,14 +160,12 @@
                                     <i class="ti ti-edit" style=" color: rgba(0,111,255,0.85) " ></i>
                                 </button>
 <%--                                    delete button--%>
+    <button type="button" class="delete-btn"
+            style="cursor: pointer; border: none transparent;background-color: transparent"
+            data-article-id="<%= article.getReference() %>">
+        <i class="ti ti-trash"  style="color: #a10303;"></i>
 
-    <button type="button" class="btn btn-primary" id="confirm-text">Alert</button>
-                                <button
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#animationModal"
-                                        style="background-color: transparent; color: white; border: none; padding: 5px 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; margin: 2px; cursor: pointer;">
-                                    <i class="ti ti-trash"  style="color: #a10303;"></i>
-                                </button>
+    </button>
 
                             </td>
 
@@ -358,4 +356,57 @@
     }
 
 
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get all elements with class 'delete-btn'
+        var deleteButtons = document.querySelectorAll('.delete-btn');
+
+
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+
+                var reference = button.getAttribute('data-article-id');
+                console.log(reference)
+
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    customClass: {
+                        confirmButton: 'btn btn-primary me-3',
+                        cancelButton: 'btn btn-label-secondary'
+                    },
+                    buttonsStyling: false
+                }).then(function (result) {
+                    if (result.value) {
+
+                        var contextPath = '<%= request.getContextPath() %>';
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('GET', contextPath + '/7otIsmServlet', false);
+                        xhr.send();
+                        if (xhr.responseText === "true"){
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Deleted!',
+                                text: 'Your article has been deleted.',
+                                customClass: {
+                                    confirmButton: 'btn btn-success'
+                                }
+                            });
+
+                        }
+
+
+
+                    }
+                });
+            });
+        });
+    });
 </script>
