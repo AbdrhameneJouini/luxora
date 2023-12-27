@@ -128,14 +128,14 @@ public class ArticleDAO {
         }
     }
 
-    public Article rechercherArticleParNom(String nom) {
+    public Article rechercherArticleParNom(String Nom_Article) {
         try (Connection connection = DBConnection.getConnection()) {
             Article article = null;
-            String query = "SELECT * FROM produits WHERE nom = ?";
+            String query = "SELECT Reference,Prix,Nom_Article,Description,Image,categorie FROM article WHERE Nom_Article= ?";
 
 
             try   (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, nom);
+                preparedStatement.setString(1, Nom_Article);
 
                 ResultSet resultSet = preparedStatement.executeQuery();
 

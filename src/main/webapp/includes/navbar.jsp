@@ -55,12 +55,15 @@
         </a>
 
         <div class="header-search-container">
+          <form id="searchForm" action="RechercheProduit" method="Get">
 
-          <input type="search" name="search" class="search-field" placeholder="Enter your product...">
 
-          <button class="search-btn">
+          <input type="search" name="search" class="search-field" placeholder="Enter your product..."   id="searchInput">
+
+          <button  type="submit" class="search-btn" id="searchIcon">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
+          </form>
 
         </div>
 
