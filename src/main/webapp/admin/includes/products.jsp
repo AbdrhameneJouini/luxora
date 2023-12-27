@@ -318,7 +318,7 @@
         const selectedSize = sizeSelect.value;
 
         if (selectedSize) {
-            // Create unique IDs for size and quantity inputs
+
             const sizeId = "size_" + selectedSize;
             const quantityId = "quantity_" + selectedSize;
 
@@ -337,12 +337,11 @@
             quantityInput.placeholder = "Quantity";
             quantityInput.className ="form-control";
             quantityInput.min = 0;
-            quantityInput.id = quantityId;  // Set unique ID
+            quantityInput.id = quantityId;
 
-            // Remove the selected size from the dropdown
             sizeSelect.remove(sizeSelect.selectedIndex);
 
-            // Check if all sizes are chosen
+
             if (sizeSelect.options.length === 0) {
                 sizeSelect.disabled = true;
             }

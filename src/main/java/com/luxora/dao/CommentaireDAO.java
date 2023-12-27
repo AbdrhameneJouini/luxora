@@ -120,17 +120,16 @@ public class CommentaireDAO {
 			}} else {
 			System.out.println("Aucun commentaire trouvé avec la référence : " + reference);
 		}
-		// Récupérer tous les commentaires
+
 		List<Commentaire> allComments = commentaireDAO.getAllComments();
 
-		// Récupérer tous les commentaires principaux
+
 		List<Commentaire> commentairesPrincipaux = Commentaire.getCommentairesPrincipaux(allComments);
 
-		// Pour chaque commentaire principal, récupérer tous ses sous-commentaires
 		for (Commentaire commentairePrincipal : commentairesPrincipaux) {
 			List<Commentaire> subComments = getAllSubComments(allComments, commentairePrincipal);
 
-			// Afficher les sous-commentaires
+
 			System.out.println("Sous-commentaires pour le commentaire principal ID " + commentairePrincipal.getId_commentaire());
 			for (Commentaire subComment : subComments) {
 				System.out.println("Sous-commentaire - ID : " + subComment.getId_commentaire());

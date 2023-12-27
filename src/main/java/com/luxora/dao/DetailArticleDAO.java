@@ -37,7 +37,7 @@ public class DetailArticleDAO {
         try (Connection connection = DBConnection.getConnection()) {
             String query = "UPDATE detailarticle SET quantite = ? WHERE reference = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                // Vous devez définir la valeur de la colonne quantite
+
                 preparedStatement.setString(1, article.getReference());
                 preparedStatement.setInt(2, article.getQuantite());
 

@@ -79,7 +79,7 @@ public class ArticleDAO {
             }
         } catch (SQLException e) {
             System.out.println("SQL Exception while deleting article: " + e.getMessage());
-            e.printStackTrace(); // Ceci affichera les détails de l'exception dans la console pour le débogage
+            e.printStackTrace();
             throw new RuntimeException(e);
 
         }
@@ -99,7 +99,7 @@ public class ArticleDAO {
             }
         } catch (SQLException e) {
             System.out.println("SQL Exception while deleting article: " + e.getMessage());
-            e.printStackTrace(); // Ceci affichera les détails de l'exception dans la console pour le débogage
+            e.printStackTrace();
             throw new RuntimeException(e);
 
         }
@@ -131,11 +131,9 @@ public class ArticleDAO {
     public Article rechercherArticleParNom(String Nom_Article) {
         try (Connection connection = DBConnection.getConnection()) {
             Article article = null;
-            String query = "SELECT Reference,Prix,Nom_Article,Description,Image,categorie FROM article WHERE Nom_Article= ?";
-
-
+            String query = "SELECT Reference,Prix,Nom_Article,Description,Image,categorie FROM article WHERE Nom_Article LIKE ? ";
             try   (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, Nom_Article);
+                preparedStatement.setString(1, "%" + Nom_Article+ "%");
 
                 ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -160,6 +158,23 @@ public class ArticleDAO {
         try (Connection connection = DBConnection.getConnection()) {
             String query = "SELECT * FROM article";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    List<Article> articles = new ArrayList<>();
+                    while (resultSet.next()) {
+                        articles.add(mapResultSetToArticle(resultSet));
+                    }
+                    return articles;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public List<Article> getArticlesByCategory(String categorie) {
+        try (Connection connection = DBConnection.getConnection()) {
+            String query = "SELECT * FROM article WHERE categorie=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, categorie);
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     List<Article> articles = new ArrayList<>();
                     while (resultSet.next()) {

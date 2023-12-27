@@ -36,7 +36,7 @@ public class VueDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Gérer l'exception (par exemple, journalisation, gestion des erreurs, etc.)
+
         } finally {
             try {
                 if (resultSet != null) {

@@ -83,12 +83,12 @@
 
             </script>
             <script>
-                // JavaScript to handle the modal display
+
                 document.querySelectorAll('.edit-button').forEach(function (button) {
                     button.addEventListener('click', function () {
 
 
-                        // Retrieve article details from the data attributes
+
                         var reference = button.getAttribute('data-article-reference');
                         console.log("reference is "+ reference)
                         var name = button.getAttribute('data-article-name');
@@ -97,7 +97,7 @@
                         var category = button.getAttribute('data-article-category');
                         var description = button.getAttribute('data-article-category');
 
-                        // Populate the modal fields with the article details
+
                         document.getElementById('nameWithTitle').value = name;
                         document.getElementById('prixWithTitle').value = price;
                         document.getElementById('catWithTitle').value = category;

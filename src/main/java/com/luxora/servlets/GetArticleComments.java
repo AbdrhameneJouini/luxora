@@ -13,21 +13,19 @@ import java.util.List;
 public class GetArticleComments extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        String articleReference = request.getParameter("articleReference");
+
         String articleReference = "ProductRef1";
         if (articleReference != null && !articleReference.isEmpty()) {
-            // Fetch comments for the given article reference
+
             CommentaireDAO commentaireDAO = new CommentaireDAO();
             List<Commentaire> comments = commentaireDAO.getCommByReference(articleReference);
 
-            // Set comments as an attribute in the request
             request.setAttribute("articleComments", comments);
         } else {
-            // Handle the case where articleReference is not provided
             request.setAttribute("articleComments", null);
         }
 
-        // Forward the request to the JSP page
+
         this.getServletContext().getRequestDispatcher("/commentsSHOW.jsp").forward(request, response);
     }
 

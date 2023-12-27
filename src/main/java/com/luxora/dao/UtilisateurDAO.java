@@ -72,10 +72,10 @@ public class UtilisateurDAO {
         String insertClientQuery = "INSERT INTO Client (id_uti, address) VALUES (?, ?)";
 
         try {
-            // Establish the database connection
+
             connection = DBConnection.getConnection();
 
-            // Start a transaction
+
             connection.setAutoCommit(false);
 
             // Insert into Utilisateur
@@ -106,11 +106,11 @@ public class UtilisateurDAO {
                 }
             }
 
-            // Commit the transaction if everything is successful
+
             connection.commit();
 
         } catch (SQLException e) {
-            // Rollback the transaction if there's an exception
+
             if (connection != null) {
                 try {
                     connection.rollback();
@@ -120,7 +120,7 @@ public class UtilisateurDAO {
             }
             e.printStackTrace();
         } finally {
-            // Close the database connection and set auto-commit back to true
+
             try {
                 if (connection != null) {
                     connection.setAutoCommit(true);
@@ -282,10 +282,9 @@ public class UtilisateurDAO {
     }
 
     public static void main(String[] args) {
-        // Le mot de passe à hacher (simulé pour le test)
+
         String password = "mimi";
 
-        // Hash du mot de passe
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         System.out.println("Mot de passe haché : " + hashedPassword);
     }}
