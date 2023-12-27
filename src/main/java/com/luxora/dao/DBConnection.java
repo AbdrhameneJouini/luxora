@@ -5,12 +5,17 @@ import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+
+
+
+
+
 public class DBConnection {
 
     public static Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://localhost/ecommerce";
+        String url = "jdbc:mysql://localhost/projet";
         String user = "root";
-        String password = "root";
+        String password = "gestion_scolaire123";
         return DriverManager.getConnection(url, user, password);
     }
 

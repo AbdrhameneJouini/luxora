@@ -20,7 +20,7 @@ public class UtilisateurDAO {
 
                 preparedStatement.setString(2, utilisateur.getPrenom_uti());
 
-               
+
 
                 preparedStatement.setString(4, utilisateur.getMdp());
                 preparedStatement.setString(5, utilisateur.getEmail());
@@ -40,7 +40,7 @@ public class UtilisateurDAO {
     }
     public boolean checkEmailExists(String email) {
 
-    	 try (Connection connection = DBConnection.getConnection()) {
+        try (Connection connection = DBConnection.getConnection()) {
             String query = "SELECT 1 FROM utilisateur WHERE email = ? ";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, email);
@@ -134,12 +134,12 @@ public class UtilisateurDAO {
     public  int checkUserRole(String email) {
         try (Connection connection = DBConnection.getConnection()) {
             String query = "SELECT id_uti FROM utilisateur WHERE email = ?";
-            
+
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, email); 
+                preparedStatement.setString(1, email);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) { 
+                    if (resultSet.next()) {
                         int userId = resultSet.getInt("id_uti");
                         String adminQuery = "SELECT id_uti FROM admin WHERE id_uti = ?";
                         try (PreparedStatement adminStatement = connection.prepareStatement(adminQuery)) {
@@ -165,33 +165,33 @@ public class UtilisateurDAO {
                     }
                 }
             }
-          
+
         } catch (SQLException e) {
             e.printStackTrace();
-            
+
         }
         return -3 ;}
-    
+
     public String getEtatClient(String email) {
         String etat = null;
 
         try (Connection connection = DBConnection.getConnection()) {
-            
+
             String query = "SELECT c.etat FROM utilisateur u JOIN client c ON u.id_uti = c.id_uti WHERE u.email = ?";
-            
+
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, email);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
                         etat = resultSet.getString("etat");
-                        
+
                     }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-         
+
         }
 
         return etat;
@@ -217,7 +217,7 @@ public class UtilisateurDAO {
                             System.out.printf("Login successful. User ID: %d, Etat: %s\n", userId, etat);
                             return etat;
                         } else {
-                        	  // If passwords don't match, login fails
+                            // If passwords don't match, login fails
                             System.out.println("Invalid login credentials");
                             return "Invalid login credentials";
                         }
@@ -280,12 +280,12 @@ public class UtilisateurDAO {
             return false;
         }
     }
-   
-        public static void main(String[] args) {
-            // Le mot de passe à hacher (simulé pour le test)
-            String password = "mimi";
 
-            // Hash du mot de passe
-            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-            System.out.println("Mot de passe haché : " + hashedPassword);
-   }} 
+    public static void main(String[] args) {
+        // Le mot de passe à hacher (simulé pour le test)
+        String password = "mimi";
+
+        // Hash du mot de passe
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        System.out.println("Mot de passe haché : " + hashedPassword);
+    }}

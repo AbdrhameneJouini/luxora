@@ -18,21 +18,21 @@ public class ClientDAO {
         preparedStatement.setString(4, clt.getUsername());
         preparedStatement.setString(6, clt. getAddress());
         preparedStatement.setString(7, clt.getNum_Tel());
-       
+
         preparedStatement.setString(5, clt.getEtatCompte());
-       
-       
-        
-       
+
+
+
+
     }
-    
-
-    
 
 
-    public Client getClientById( int id_uti) {
+
+
+
+    public Client getClientById(int id_uti) {
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "SELECT * FROM client WHERE id_uti=?";
+            String query = "SELECT utilisateur.*, client.* FROM utilisateur LEFT JOIN client ON utilisateur.id_uti = client.id_uti WHERE utilisateur.id_uti = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setInt(1, id_uti);
 
@@ -40,7 +40,7 @@ public class ClientDAO {
                     if (resultSet.next()) {
                         return mapResultSetToClient(resultSet);
                     } else {
-                        System.out.println("client not found.");
+                        System.out.println("Client not found.");
                         return null;
                     }
                 }
@@ -50,16 +50,13 @@ public class ClientDAO {
         }
     }
 
-    
-    
-
     private Client mapResultSetToClient(ResultSet resultSet) throws SQLException {
         Client clt = new Client();
         clt.setId_uti(resultSet.getInt("id_uti"));
         clt.setNom_uti(resultSet.getString("nom_uti"));
         clt.setPrenom_uti(resultSet.getString("prenom_uti"));
         clt.setEmail(resultSet.getString("email"));
-       
+
         clt.setUsername(resultSet.getString("username"));
         clt.setAddress(resultSet.getString("address"));
         clt.setNum_Tel(resultSet.getString("num_Tel"));
@@ -77,7 +74,7 @@ public class ClientDAO {
 
         if (clt!= null) {
             System.out.println("client trouvé : " + clt.getNom_uti());
-            
+
         } else {
             System.out.println("Aucun client trouvé avec l'ID : " + Id_uti);
         }

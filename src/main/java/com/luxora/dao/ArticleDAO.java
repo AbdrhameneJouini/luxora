@@ -45,7 +45,7 @@ public class ArticleDAO {
 
     public void updateArticle(Article article) {
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "UPDATE articles SET Prix=?, Nom_Article=?, Description=?, Image=? WHERE Reference=?";
+            String query = "UPDATE article SET Prix=?, Nom_Article=?, Description=?, Image=? WHERE Reference=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 prepareStatements(article, preparedStatement);
                 // NEEDS AN UPDATE
@@ -63,11 +63,32 @@ public class ArticleDAO {
         }
     }
 
-    public void deleteArticle(int reference) {
+    public void deleteArticle(String reference) {
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "DELETE FROM articles WHERE Reference=?";
+            String query = "DELETE FROM article WHERE Reference=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setInt(1, reference);
+                preparedStatement.setString(1, reference);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Article deleted successfully.");
+
+                } else {
+                    System.out.println("Article deletion failed. Article not found.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Exception while deleting article: " + e.getMessage());
+            e.printStackTrace(); // Ceci affichera les détails de l'exception dans la console pour le débogage
+            throw new RuntimeException(e);
+
+        }
+    }
+    public void deleteDetailArticle(String reference) {
+        try (Connection connection = DBConnection.getConnection()) {
+            String query = "DELETE FROM detailarticle WHERE reference=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, reference);
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected > 0) {
@@ -77,21 +98,24 @@ public class ArticleDAO {
                 }
             }
         } catch (SQLException e) {
+            System.out.println("SQL Exception while deleting article: " + e.getMessage());
+            e.printStackTrace(); // Ceci affichera les détails de l'exception dans la console pour le débogage
             throw new RuntimeException(e);
+
         }
     }
 
-    public Article getArticleById( String reference) {
+    public Article getArticleById( String articleId) {
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "SELECT * FROM articles WHERE Reference=?";
+            String query = "SELECT * FROM article WHERE Reference=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, reference);
+                preparedStatement.setString(1, articleId);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
-                    	int nbVues = resultSet.getInt("nbvues");
-                    	 nbVues++;
-                   
+                        int nbVues = resultSet.getInt("nbvues");
+                        nbVues++;
+
                         return mapResultSetToArticle(resultSet);
                     } else {
                         System.out.println("Article not found.");
@@ -103,10 +127,37 @@ public class ArticleDAO {
             throw new RuntimeException(e);
         }
     }
+    public Article rechercherArticleParNom(String nom) {
+        try (Connection connection = DBConnection.getConnection()) {
+            Article article = null;
+            String query = "SELECT * FROM produits WHERE nom = ?";
+
+
+            try   (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, nom);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    return mapResultSetToArticle(resultSet);
+                }
+                else {
+                    System.out.println("Article not found.");
+                    return null;
+                }
+            }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 
     public List<Article> getAllArticles() {
         try (Connection connection = DBConnection.getConnection()) {
-            String query = "SELECT * FROM articles";
+            String query = "SELECT * FROM article";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     List<Article> articles = new ArrayList<>();
@@ -128,7 +179,7 @@ public class ArticleDAO {
         article.setNom_Article(resultSet.getString("Nom_Article"));
         article.setDescription(resultSet.getString("Description"));
         article.setImage(resultSet.getString("Image"));
-        article.setCategorie(resultSet.getString("category"));
+        article.setCategorie(resultSet.getString("categorie"));
 
 
         return article;

@@ -1,23 +1,10 @@
-<%--
-  Created by IntelliJ IDEA.
-  Product: abdou
-  Date: 12/25/2023
-  Time: 3:05 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.luxora.beans.Article" %>
 <%@ page import="java.util.List" %>
 <%@taglib  uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
-<%--
-  Created by IntelliJ IDEA.
-  Product: abdou
-  Date: 12/25/2023
-  Time: 2:48 AM
-  To change this template use File | Settings | File Templates.
---%>
-<jsp:include page="editProductModal.jsp" />
-<jsp:include page="deleteProductModal.jsp" />
+
+
+
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row g-4 mb-4">
         <div class="col-sm-6 col-xl-3">
@@ -122,7 +109,7 @@
                     </div>
                 </div>
             </div>
-                    <table class="datatables-Products table border-top dataTable no-footer dtr-column" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+                <table class="datatables-Products table border-top dataTable no-footer dtr-column" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
                     <thead>
                     <tr>
                         <th class="control sorting_disabled dtr-hidden" rowspan="1" colspan="1" style="width: 61.4844px; display: none;" aria-label=""></th>
@@ -137,52 +124,69 @@
 
 
 
-                        <tbody>
-                        <% List<Article> articleList = (List<Article>) request.getAttribute("articleList");
+                    <tbody>
+                    <% List<Article> articleList = (List<Article>) request.getAttribute("articleList");
 
-                            if (articleList != null && !articleList.isEmpty()) {
-                                for (Article article : articleList) {
-                        %>
-                        <tr>
-                            <td><%= article.getReference() %></td>
-                            <td><%= article.getNom_Article() %></td>
-                            <td><%= article.getPrix() %></td>
-                            <td><%= article.getCategorie() %></td>
-                            <td>
+                        if (articleList != null && !articleList.isEmpty()) {
+                            for (Article article : articleList) {
+                    %>
+                    <tr>
+                        <td><%= article.getReference() %></td>
+                        <td><%= article.getNom_Article() %></td>
+                        <td><%= article.getPrix() %></td>
+                        <td><%= article.getCategorie() %></td>
+                        <td>
 
-<%--                                edit button --%>
+                            <%--                                edit button --%>
                                 <button
+                                        style=" background-color: transparent; color: white; border: none; padding: 5px 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; margin: 2px; cursor: pointer;"
+                                        class="edit-button"
                                         data-bs-toggle="modal"
                                         data-bs-target="#modalCenter"
-                                        style="background-color: transparent; color: white; border: none; padding: 5px 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; margin: 2px; cursor: pointer;">
+                                        data-article-reference="<%= article.getReference() %>"
+                                        data-article-name="<%= article.getNom_Article() %>"
+                                        data-article-price="<%= article.getPrix() %>"
+                                        data-article-category="<%= article.getCategorie() %>">
+
+
 
 
                                     <i class="ti ti-edit" style=" color: rgba(0,111,255,0.85) " ></i>
                                 </button>
-<%--                                    delete button--%>
-    <button type="button" class="delete-btn"
-            style="cursor: pointer; border: none transparent;background-color: transparent"
-            data-article-id="<%= article.getReference() %>">
-        <i class="ti ti-trash"  style="color: #a10303;"></i>
 
-    </button>
-
-                            </td>
-
-                        </tr>
-                        <% }
-                        } else { %>
-                        <tr class="odd">
-                            <td valign="top" colspan="6" class="dataTables_empty">
-                                Loading... <!-- You may want to add a loading spinner or message here -->
-                            </td>
-                        </tr>
-                        <% } %>
-                        </tbody>
+                            <%--                                    delete button--%>
+                            <button type="button" class="delete-btn"
+                                    style="cursor: pointer; border: none transparent;background-color: transparent"
+                                    data-article-id="<%= article.getReference() %>">
+                                <i class="ti ti-trash"  style="color: #a10303;"></i>
 
 
+                                <jsp:include page="editProductModal.jsp" />
+                                <%--                                    delete button--%>
+                                <button type="button" class="delete-btn"
+                                        style="cursor: pointer; border: none transparent;background-color: transparent"
+                                        data-article-id="<%= article.getReference() %>">
+                                    <i class="ti ti-trash"  style="color: #a10303;"></i>
 
-            </table>
+
+                                </button>
+
+                        </td>
+
+                    </tr>
+                    <% }
+                    } else { %>
+                    <tr class="odd">
+                        <td valign="top" colspan="6" class="dataTables_empty">
+                            Loading... <!-- You may want to add a loading spinner or message here -->
+                        </td>
+                    </tr>
+                    <% } %>
+                    </tbody>
+
+
+
+                </table>
                 <div class="row mx-2">
                     <div class="col-sm-12 col-md-6">
                         <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 0 to 0 of 0 entries
@@ -235,39 +239,39 @@
 
 
                     <div class="mb-4">
-                    <label   class="form-label" for="add-product-category">Select Clothing Category:</label>
-                    <select  class="form-select" id="add-product-category" name="productCategory" required>
-                        <option value="tShirts">T-Shirts</option>
-                        <option value="dresses">Dresses</option>
-                        <option value="tops">Tops</option>
-                        <option value="bottoms">Bottoms</option>
-                        <option value="jackets">Jackets</option>
-                        <option value="sweaters">Sweaters</option>
-                        <option value="activewear">Activewear</option>
-                        <option value="lingerie">Lingerie</option>
-                        <option value="sleepwear">Sleepwear</option>
-                        <option value="suits">Suits</option>
-                        <option value="blazers">Blazers</option>
-                        <option value="jeans">Jeans</option>
-                        <option value="skirts">Skirts</option>
-                        <option value="swimwear">Swimwear</option>
-                        <option value="outerwear">Outerwear</option>
-                        <option value="hoodies">Hoodies</option>
-                        <option value="shirts">Shirts</option>
-                        <option value="pants">Pants</option>
-                        <option value="shorts">Shorts</option>
-                        <option value="jumpsuits">Jumpsuits</option>
-                        <option value="workwear">Workwear</option>
-                        <option value="maternityClothing">Maternity Clothing</option>
-                        <option value="plusSize">Plus Size</option>
-                        <option value="vintageClothing">Vintage Clothing</option>
-                        <option value="costumes">Costumes</option>
-                        <option value="sportswear">Sportswear</option>
-                        <option value="ethnicWear">Ethnic Wear</option>
-                        <option value="streetwear">Streetwear</option>
-                        <option value="accessories">Accessories (Hats, Scarves, Gloves)</option>
-                        <option value="footwear">Footwear</option>
-                    </select>
+                        <label   class="form-label" for="add-product-category">Select Clothing Category:</label>
+                        <select  class="form-select" id="add-product-category" name="productCategory" required>
+                            <option value="tShirts">T-Shirts</option>
+                            <option value="dresses">Dresses</option>
+                            <option value="tops">Tops</option>
+                            <option value="bottoms">Bottoms</option>
+                            <option value="jackets">Jackets</option>
+                            <option value="sweaters">Sweaters</option>
+                            <option value="activewear">Activewear</option>
+                            <option value="lingerie">Lingerie</option>
+                            <option value="sleepwear">Sleepwear</option>
+                            <option value="suits">Suits</option>
+                            <option value="blazers">Blazers</option>
+                            <option value="jeans">Jeans</option>
+                            <option value="skirts">Skirts</option>
+                            <option value="swimwear">Swimwear</option>
+                            <option value="outerwear">Outerwear</option>
+                            <option value="hoodies">Hoodies</option>
+                            <option value="shirts">Shirts</option>
+                            <option value="pants">Pants</option>
+                            <option value="shorts">Shorts</option>
+                            <option value="jumpsuits">Jumpsuits</option>
+                            <option value="workwear">Workwear</option>
+                            <option value="maternityClothing">Maternity Clothing</option>
+                            <option value="plusSize">Plus Size</option>
+                            <option value="vintageClothing">Vintage Clothing</option>
+                            <option value="costumes">Costumes</option>
+                            <option value="sportswear">Sportswear</option>
+                            <option value="ethnicWear">Ethnic Wear</option>
+                            <option value="streetwear">Streetwear</option>
+                            <option value="accessories">Accessories (Hats, Scarves, Gloves)</option>
+                            <option value="footwear">Footwear</option>
+                        </select>
 
                     </div>
                     <div class="mb-4">
@@ -386,27 +390,34 @@
                     if (result.value) {
 
                         var contextPath = '<%= request.getContextPath() %>';
+
+                        console.log("hhhhhhhhhhhhi"+contextPath);
                         var xhr = new XMLHttpRequest();
-                        xhr.open('GET', contextPath + '/7otIsmServlet', false);
+                        xhr.open('GET', contextPath + '/admin/DeleteProduct?productIdToDelete='+reference, false);
                         xhr.send();
+                        console.log("hiii");
                         if (xhr.responseText === "true"){
 
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Deleted!',
-                                text: 'Your article has been deleted.',
-                                customClass: {
-                                    confirmButton: 'btn btn-success'
-                                }
-                            });
+
+
+
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Deleted!',
+                                    text: 'Your article has been deleted.',
+                                    customClass: {
+                                        confirmButton: 'btn btn-success'
+                                    }
+                                });
+
+                            }
+
+
 
                         }
-
-
-
-                    }
+                    });
                 });
             });
         });
-    });
 </script>
