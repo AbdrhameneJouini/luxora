@@ -147,10 +147,7 @@
                                         data-article-name="<%= article.getNom_Article() %>"
                                         data-article-price="<%= article.getPrix() %>"
                                         data-article-category="<%= article.getCategorie() %>">
-
-
-
-
+                                    data-article-description="<%= article.getDescription() %>">
                                     <i class="ti ti-edit" style=" color: rgba(0,111,255,0.85) " ></i>
                                 </button>
 

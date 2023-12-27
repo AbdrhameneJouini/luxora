@@ -127,6 +127,7 @@ public class ArticleDAO {
             throw new RuntimeException(e);
         }
     }
+
     public Article rechercherArticleParNom(String nom) {
         try (Connection connection = DBConnection.getConnection()) {
             Article article = null;
