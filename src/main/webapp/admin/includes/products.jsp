@@ -154,14 +154,8 @@
                                     <i class="ti ti-edit" style=" color: rgba(0,111,255,0.85) " ></i>
                                 </button>
 
-                            <%--                                    delete button--%>
-                            <button type="button" class="delete-btn"
-                                    style="cursor: pointer; border: none transparent;background-color: transparent"
-                                    data-article-id="<%= article.getReference() %>">
-                                <i class="ti ti-trash"  style="color: #a10303;"></i>
-
-
                                 <jsp:include page="editProductModal.jsp" />
+
                                 <%--                                    delete button--%>
                                 <button type="button" class="delete-btn"
                                         style="cursor: pointer; border: none transparent;background-color: transparent"
