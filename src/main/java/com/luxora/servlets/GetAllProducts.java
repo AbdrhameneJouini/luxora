@@ -20,7 +20,7 @@ public class GetAllProducts extends HttpServlet {
         ArticleDAO articleDAO = new ArticleDAO();
         List<Article> articleList = articleDAO.getAllArticles();
         DetailArticleDAO detailArticleDAO = new DetailArticleDAO();
-        List<DetailArticle> details = detailArticleDAO.getDetailsByArticleId(articleId);
+
 
 
 

@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: abdou
-  Date: 12/26/2023
-  Time: 2:09 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 
 <%@ page import="com.luxora.beans.Article" %>
 <%@ page import="java.util.List" %>
@@ -77,6 +71,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
             <script>
                 console.log("hiiii oga boga")

@@ -190,13 +190,13 @@ public class ArticleDAO {
 
     public static void main(String[] args) {
         ArticleDAO infoProduit = new ArticleDAO();
-        String articleId = "1"; // Remplacez par l'ID de l'article que vous souhaitez récupérer
+        String articleId = "1";
 
         Article article = infoProduit.getArticleById(articleId);
 
         if (article != null) {
             System.out.println("Article trouvé : " + article.getNom_Article());
-            // Affichez d'autres détails de l'article si nécessaire
+
         } else {
             System.out.println("Aucun article trouvé avec l'ID : " + articleId);
         }

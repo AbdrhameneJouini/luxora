@@ -67,6 +67,9 @@ public class Article {
     public void setListDetailArticle(List<DetailArticle> listDetailArticle) {
         this.listDetailArticle = listDetailArticle;
     }
+    public List<DetailArticle> getListDetailArticle() {
+        return listDetailArticle;
+    }
 
 
 

@@ -135,6 +135,7 @@
                         <td><%= article.getNom_Article() %></td>
                         <td><%= article.getPrix() %></td>
                         <td><%= article.getCategorie() %></td>
+
                         <td>
 
                             <%--                                edit button --%>
@@ -146,8 +147,11 @@
                                         data-article-reference="<%= article.getReference() %>"
                                         data-article-name="<%= article.getNom_Article() %>"
                                         data-article-price="<%= article.getPrix() %>"
-                                        data-article-category="<%= article.getCategorie() %>">
+                                        data-article-category="<%= article.getCategorie() %>"
                                     data-article-description="<%= article.getDescription() %>">
+                                    data-article-liste-details="<%= article.getListDetailArticle() %>">
+
+
                                     <i class="ti ti-edit" style=" color: rgba(0,111,255,0.85) " ></i>
                                 </button>
 
@@ -279,6 +283,8 @@
                                 <option value="XL">XL</option>
                                 <option value="XXL">XXL</option>
 
+
+
                             </select>
                             <button type="button" onclick="addSizeField()"  class="btn btn-secondary">Add Size</button>
                         </div>
@@ -305,6 +311,7 @@
 
 
 <script>
+
 
     function addSizeField() {
         const sizeSelect = document.getElementById("sizeSelect");
@@ -347,13 +354,13 @@
             sizesContainer.appendChild(document.createElement("br"));
 
 
+
+
         }
     }
 
 
-</script>
 
-<script>
     document.addEventListener('DOMContentLoaded', function () {
         // Get all elements with class 'delete-btn'
         var deleteButtons = document.querySelectorAll('.delete-btn');
@@ -411,4 +418,8 @@
                 });
             });
         });
+
+
+
+
 </script>
